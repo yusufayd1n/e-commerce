@@ -11,10 +11,10 @@ class ProductRepositoryImpl(
     private val productApiService: ProductApiService
 ) : ProductRepository {
 
-    override suspend fun getProducts(): Flow<Resource<List<Product>>> = flow {
+    override suspend fun getProducts(): Flow<Resource<MutableList<Product>>> = flow {
         emit(Resource.loading(null))
 
-        val productResponse: List<ProductResponse> = productApiService.getCars()
+        val productResponse: MutableList<ProductResponse> = productApiService.getCars()
 
         try {
             val products = productResponse.map { response ->
@@ -27,7 +27,7 @@ class ProductRepositoryImpl(
                     model = response.model,
                     brand = response.brand
                 )
-            }
+            }.toMutableList()
             emit(Resource.success(products))
         } catch (e: Exception) {
             emit(Resource.error(e.message ?: "Unknown error", null)) // Hata durumu

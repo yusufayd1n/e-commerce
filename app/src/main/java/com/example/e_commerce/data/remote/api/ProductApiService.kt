@@ -6,5 +6,5 @@ import retrofit2.http.GET
 
 interface ProductApiService {
     @GET("products")
-    suspend fun getCars(): List<ProductResponse>
+    suspend fun getCars(): MutableList<ProductResponse>
 }

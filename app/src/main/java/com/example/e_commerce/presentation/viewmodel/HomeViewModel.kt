@@ -18,14 +18,19 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val productsUseCase: GetProductsUseCase
 ) : ViewModel() {
-    private var _getProducts = MutableLiveData<Resource<List<Product>>>()
-    val getProducts: LiveData<Resource<List<Product>>>
+    private var _getProducts = MutableLiveData<Resource<MutableList<Product>>>()
+    val getProducts: LiveData<Resource<MutableList<Product>>>
         get() = _getProducts
 
     fun getProducts() {
         viewModelScope.launch(Dispatchers.IO) {
-            productsUseCase.invoke().collect {
-                _getProducts.postValue(it)
+            _getProducts.postValue(Resource.loading(null))
+            try {
+                productsUseCase.invoke().collect {
+                    _getProducts.postValue(it)
+                }
+            } catch (e: Exception) {
+                _getProducts.postValue(Resource.error(e.message ?: "Unknown error", null))
             }
         }
     }

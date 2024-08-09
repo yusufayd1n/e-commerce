@@ -10,7 +10,7 @@ import javax.inject.Inject
 class GetProductsUseCase @Inject constructor(
     private val carRepository: ProductRepository
 ) {
-    suspend operator fun invoke(): Flow<Resource<List<Product>>> {
+    suspend operator fun invoke(): Flow<Resource<MutableList<Product>>> {
         return carRepository.getProducts()
     }
 }

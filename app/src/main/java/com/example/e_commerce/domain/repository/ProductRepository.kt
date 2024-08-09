@@ -5,5 +5,5 @@ import com.example.e_commerce.extension.Resource
 import kotlinx.coroutines.flow.Flow
 
 interface ProductRepository {
-    suspend fun getProducts(): Flow<Resource<List<Product>>>
+    suspend fun getProducts(): Flow<Resource<MutableList<Product>>>
 }
