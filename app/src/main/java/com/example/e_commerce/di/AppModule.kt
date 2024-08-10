@@ -4,10 +4,10 @@ import android.content.Context
 import com.example.e_commerce.App
 import com.example.e_commerce.data.local.database.dao.ProductDao
 import com.example.e_commerce.data.remote.api.ProductApiService
-import com.example.e_commerce.data.repository.CartRepositoryImpl
+import com.example.e_commerce.data.repository.StorageRepositoryImpl
 import com.example.e_commerce.domain.repository.ProductRepository
 import com.example.e_commerce.data.repository.RemoteProductRepositoryImpl
-import com.example.e_commerce.domain.repository.CartRepository
+import com.example.e_commerce.domain.repository.ProductStorageRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,8 +42,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideLocalProductRepository(productDao: ProductDao): CartRepository {
-        return CartRepositoryImpl(productDao)
+    fun provideLocalProductRepository(productDao: ProductDao): ProductStorageRepository {
+        return StorageRepositoryImpl(productDao)
     }
 
     @Provides

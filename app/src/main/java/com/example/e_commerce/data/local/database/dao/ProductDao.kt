@@ -17,7 +17,7 @@ interface ProductDao {
     suspend fun updateProductCount(product: ProductDaoModel)
 
     @Query("DELETE FROM products WHERE id = :id")
-    suspend fun deleteProduct(id: Int)
+    suspend fun deleteProduct(id: String)
 
     @Query("SELECT * FROM products WHERE type = :type")
     suspend fun getProductsByType(type: ProductType): MutableList<ProductDaoModel>

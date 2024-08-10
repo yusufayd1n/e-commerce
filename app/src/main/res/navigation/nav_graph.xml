@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/basketFragment"
         android:name="com.example.e_commerce.presentation.view.BasketFragment"
-        android:label="fragment_basket"
+        android:label="Cart"
         tools:layout="@layout/fragment_basket" />
     <fragment
         android:id="@+id/productDetailFragment"
