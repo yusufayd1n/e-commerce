@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -48,9 +47,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        productsAdapter = ProductAdapter { product ->
-            //TODO add to cart
-        }
+        productsAdapter = ProductAdapter(
+            onFavoriteClick = {
+                Log.d("YUSUFAYDIN","onFavoriteClick")
+            },
+            onProductClick = {
+                Log.d("YUSUFAYDIN","onProductClick")
+            },
+            onAddToCartClick = {
+                Log.d("YUSUFAYDIN","onAddToCartClick")
+            }
+        )
 
         val gridLayoutManager = object : GridLayoutManager(context, 2) {
             override fun checkLayoutParams(lp: RecyclerView.LayoutParams?): Boolean {

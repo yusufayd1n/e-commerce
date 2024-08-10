@@ -9,7 +9,9 @@ import com.example.e_commerce.databinding.ItemProductBinding
 import com.example.e_commerce.domain.model.Product
 
 class ProductAdapter(
-    private val onAddToCartClick: (Product) -> Unit
+    private val onAddToCartClick: (Product) -> Unit,
+    private val onProductClick: (Product) -> Unit,
+    private val onFavoriteClick: (Product) -> Unit
 ) : ListAdapter<Product, ProductAdapter.ProductViewHolder>(ProductDiffCallback()) {
 
 
@@ -28,6 +30,12 @@ class ProductAdapter(
             binding.product = product
             binding.btnAddCart.setOnClickListener {
                 onAddToCartClick(product)
+            }
+            binding.root.setOnClickListener {
+                onProductClick(product)
+            }
+            binding.ivFavorite.setOnClickListener {
+                onFavoriteClick(product)
             }
             binding.executePendingBindings()
         }
