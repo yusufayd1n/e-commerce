@@ -1,11 +1,17 @@
 package com.example.e_commerce.di
 
+import android.content.Context
+import com.example.e_commerce.App
+import com.example.e_commerce.data.local.database.dao.ProductDao
 import com.example.e_commerce.data.remote.api.ProductApiService
+import com.example.e_commerce.data.repository.CartRepositoryImpl
 import com.example.e_commerce.domain.repository.ProductRepository
-import com.example.e_commerce.domain.repository.ProductRepositoryImpl
+import com.example.e_commerce.data.repository.RemoteProductRepositoryImpl
+import com.example.e_commerce.domain.repository.CartRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -15,6 +21,10 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    @Provides
+    fun provideMainApplication(@ApplicationContext context: Context): App {
+        return context as App
+    }
     @Provides
     @Singleton
     fun provideRetrofit(): Retrofit {
@@ -26,13 +36,19 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideCarRepository(productApiService: ProductApiService): ProductRepository {
-        return ProductRepositoryImpl(productApiService)
+    fun provideProductRepository(productApiService: ProductApiService): ProductRepository {
+        return RemoteProductRepositoryImpl(productApiService)
     }
 
     @Provides
     @Singleton
-    fun provideCarApiService(retrofit: Retrofit): ProductApiService {
+    fun provideLocalProductRepository(productDao: ProductDao): CartRepository {
+        return CartRepositoryImpl(productDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProductApiService(retrofit: Retrofit): ProductApiService {
         return retrofit.create(ProductApiService::class.java)
     }
 }

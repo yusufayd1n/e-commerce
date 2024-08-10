@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetProductsUseCase @Inject constructor(
-    private val carRepository: ProductRepository
+    private val productRepository: ProductRepository
 ) {
     suspend operator fun invoke(): Flow<Resource<MutableList<Product>>> {
-        return carRepository.getProducts()
+        return productRepository.getProducts()
     }
 }

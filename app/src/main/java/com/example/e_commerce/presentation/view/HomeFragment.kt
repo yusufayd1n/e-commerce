@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_commerce.R
+import com.example.e_commerce.data.local.model.ProductType
 import com.example.e_commerce.databinding.FragmentHomeBinding
 import com.example.e_commerce.extension.Status
 import com.example.e_commerce.extension.gone
@@ -51,7 +52,7 @@ class HomeFragment : Fragment() {
     private fun setupRecyclerView() {
         productsAdapter = ProductAdapter(
             onFavoriteClick = {
-                Log.d("YUSUFAYDIN", "onFavoriteClick")
+                viewModel.addProduct(it, ProductType.FAVORITE)
             },
             onProductClick = { product ->
                 val action =
@@ -59,16 +60,10 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(action)
             },
             onAddToCartClick = {
-                Log.d("YUSUFAYDIN", "onAddToCartClick")
+                viewModel.addProduct(it, ProductType.CART)
             }
         )
 
-        val gridLayoutManager = object : GridLayoutManager(context, 2) {
-            override fun checkLayoutParams(lp: RecyclerView.LayoutParams?): Boolean {
-                lp?.height = (height / 2)
-                return true
-            }
-        }
         binding.rvProducts.apply {
             adapter = productsAdapter
             layoutManager = GridLayoutManager(context, 2)

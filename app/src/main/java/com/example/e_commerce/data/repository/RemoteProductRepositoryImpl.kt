@@ -1,20 +1,21 @@
-package com.example.e_commerce.domain.repository
+package com.example.e_commerce.data.repository
 
 import com.example.e_commerce.data.remote.api.ProductApiService
 import com.example.e_commerce.data.remote.dto.ProductResponse
 import com.example.e_commerce.domain.model.Product
+import com.example.e_commerce.domain.repository.ProductRepository
 import com.example.e_commerce.extension.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class ProductRepositoryImpl(
+class RemoteProductRepositoryImpl(
     private val productApiService: ProductApiService
 ) : ProductRepository {
 
     override suspend fun getProducts(): Flow<Resource<MutableList<Product>>> = flow {
         emit(Resource.loading(null))
 
-        val productResponse: MutableList<ProductResponse> = productApiService.getCars()
+        val productResponse: MutableList<ProductResponse> = productApiService.getProducts()
 
         try {
             val products = productResponse.map { response ->
