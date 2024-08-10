@@ -4,115 +4,138 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
-            name="product"
+            name="productData"
             type="com.example.e_commerce.domain.model.Product" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="@dimen/margin_space3"
-        tools:context=".presentation.view.ProductDetailFragment">
+        android:orientation="vertical">
 
-        <ScrollView
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginBottom="@dimen/margin_space5"
-            app:layout_constraintBottom_toTopOf="@id/tv_price"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/iv_product"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:contentDescription="@string/product"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/test"
-                    app:imageUrl="@{product.image}"
-                    tools:src="@drawable/test" />
-
-                <TextView
-                    android:id="@+id/tv_product_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_space3"
-                    android:fontFamily="@font/montserrat_semibold"
-                    android:text="@{product.name}"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size3"
-                    tools:text="iPhone 13 Pro Max 256Gb" />
-
-                <TextView
-                    android:id="@+id/tv_product_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_space3"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@{product.description}"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_medium"
-                    tools:text="Quod eligendi illum ab aliquid maxime quasi velit. Asperiores suscipit ab amet iste voluptatibus provident accusamus consequatur. Aperiam eius eligendi.\nOdit totam porro tenetur. Quasi aliquam quas. Illo officiis fugit recusandae blanditiis asperiores perferendis illum dolorum eum. Quibusdam pariatur quaerat expedita excepturi.\nAliquid praesentium praesentium. Maxime nesciunt quia ab. Rem repellat tempore repellat." />
-            </LinearLayout>
-        </ScrollView>
-
-        <ImageView
-            android:id="@+id/iv_favorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_space1"
-            android:layout_marginVertical="@dimen/margin_space2"
-            android:contentDescription="@string/favorite"
-            android:src="@drawable/ic_empty_star"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_star" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/price"
-            android:textColor="@color/blue"
-            android:textSize="@dimen/text_large"
-            app:layout_constraintBottom_toTopOf="@id/tv_price"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Price:" />
-
-        <TextView
-            android:id="@+id/tv_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_space1"
-            android:fontFamily="@font/montserrat_semibold"
-            android:text="@{String.valueOf(product.price) + '₺'}"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_large"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="124124124 ₺" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_add_cart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/margin_space3"
             android:layout_marginTop="@dimen/margin_space3"
-            android:background="@drawable/bg_add_to_cart_button"
-            android:fontFamily="@font/montserrat_medium"
-            android:paddingHorizontal="@dimen/padding_space8"
-            android:paddingVertical="@dimen/padding_space1"
-            android:text="@string/add_to_cart"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_large"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:text="Add to Cart" />
+            tools:context=".presentation.view.ProductDetailFragment">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/margin_space5"
+                android:paddingBottom="@dimen/padding_space2"
+                app:layout_constraintBottom_toTopOf="@id/tv_price"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_product"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:contentDescription="@string/product"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/test"
+                        app:imageUrl="@{productData.image}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:src="@drawable/test" />
+
+                    <ImageView
+                        android:id="@+id/iv_favorite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_space1"
+                        android:layout_marginVertical="@dimen/margin_space2"
+                        android:contentDescription="@string/favorite"
+                        android:src="@drawable/ic_empty_star"
+
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:src="@drawable/ic_star" />
+
+                    <TextView
+                        android:id="@+id/tv_product_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_space3"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:text="@{productData.name}"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size3"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_product"
+                        tools:text="iPhone 13 Pro Max 256Gb" />
+
+                    <TextView
+                        android:id="@+id/tv_product_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_space3"
+                        android:fontFamily="@font/montserrat"
+                        android:text="@{productData.description}"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_medium"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_product_name"
+                        tools:text="Quod eligendi illum ab aliquid maxime quasi velit. Asperiores suscipit ab amet iste voluptatibus provident accusamus consequatur. Aperiam eius eligendi.\nOdit totam porro tenetur. Quasi aliquam quas. Illo officiis fugit recusandae blanditiis asperiores perferendis illum dolorum eum. Quibusdam pariatur quaerat expedita excepturi.\nAliquid praesentium praesentium. Maxime nesciunt quia ab. Rem repellat tempore repellat." />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </ScrollView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/price"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/text_large"
+                app:layout_constraintBottom_toTopOf="@id/tv_price"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Price:" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_space1"
+                android:fontFamily="@font/montserrat_semibold"
+                android:text="@{String.valueOf(productData.price) + '₺'}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_large"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="124124124 ₺" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_add_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_space3"
+                android:background="@drawable/bg_add_to_cart_button"
+                android:fontFamily="@font/montserrat_medium"
+                android:paddingHorizontal="@dimen/padding_space8"
+                android:paddingVertical="@dimen/padding_space1"
+                android:text="@string/add_to_cart"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_large"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="Add to Cart" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>
