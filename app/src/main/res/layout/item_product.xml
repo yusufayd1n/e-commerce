@@ -12,63 +12,65 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_horizontal"
-        android:layout_marginEnd="@dimen/margin_large">
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/margin_space2"
+        android:layout_marginTop="@dimen/margin_space2"
+        android:layout_marginEnd="@dimen/margin_space4">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:orientation="vertical"
             android:weightSum="2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <ImageView
                 android:id="@+id/iv_product"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
                 android:layout_weight="1"
                 android:contentDescription="@string/product"
-                android:src="@drawable/test"
                 app:imageUrl="@{product.image}" />
 
             <TextView
                 android:id="@+id/tv_product_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_horizontal"
-                android:layout_marginTop="@dimen/margin_vertical"
+                android:layout_marginStart="@dimen/margin_space2"
+                android:layout_marginTop="@dimen/margin_space3"
                 android:fontFamily="@font/montserrat_medium"
-                android:text="@{String.valueOf(product.price)}"
+                android:text="@{String.valueOf(product.price) + '₺'}"
                 android:textColor="@color/blue"
-                android:textSize="14sp"
+                android:textSize="@dimen/text_medium"
                 tools:text="15.000 ₺" />
 
             <TextView
                 android:id="@+id/tv_product_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_horizontal"
-                android:layout_marginTop="@dimen/margin_vertical"
+                android:layout_marginStart="@dimen/margin_space2"
+                android:layout_marginTop="@dimen/margin_space3"
                 android:fontFamily="@font/montserrat_medium"
                 android:text="@{product.name}"
-                android:textSize="14sp"
+                android:textSize="@dimen/text_medium"
                 tools:text="iPhone 13 Pro Max 256Gb" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_add_cart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_horizontal"
-                android:layout_marginTop="@dimen/margin_vertical"
-                android:layout_marginEnd="@dimen/margin_horizontal"
+                android:layout_marginStart="@dimen/margin_space2"
+                android:layout_marginTop="@dimen/margin_space3"
+                android:layout_marginEnd="@dimen/margin_space2"
                 android:background="@drawable/bg_add_to_cart_button"
                 android:fontFamily="@font/montserrat_medium"
                 android:text="@string/add_to_cart"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_large" />
 
         </LinearLayout>
 

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.e_commerce.databinding.FragmentHomeBinding
 import com.example.e_commerce.extension.Status
 import com.example.e_commerce.presentation.adapter.ProductAdapter
@@ -22,6 +23,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var productsAdapter: ProductAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -40,11 +42,19 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeViewModel()
+
     }
 
     private fun setupRecyclerView() {
         productsAdapter = ProductAdapter { product ->
             //TODO add to cart
+        }
+
+        val gridLayoutManager = object : GridLayoutManager(context, 2) {
+            override fun checkLayoutParams(lp: RecyclerView.LayoutParams?): Boolean {
+                lp?.height = (height / 2)
+                return true
+            }
         }
         binding.rvProducts.apply {
             adapter = productsAdapter
@@ -57,17 +67,20 @@ class HomeFragment : Fragment() {
         viewModel.getProducts.observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Status.SUCCESS -> {
+                    binding.progressBar.visibility = View.GONE
                     resource.data?.let { products ->
                         productsAdapter.submitList(products)
                     }
                 }
 
                 Status.ERROR -> {
-                    //TODO show error to user
+                    binding.progressBar.visibility = View.GONE
+                    binding.tvError.visibility = View.VISIBLE
+                    binding.tvError.text = resource.message
                 }
 
                 Status.LOADING -> {
-                    //TODO show loading bar
+                    binding.progressBar.visibility = View.VISIBLE
                 }
             }
         }

@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="margin_small">8dp</dimen>
-    <dimen name="margin_medium">16dp</dimen>
-    <dimen name="margin_large">20dp</dimen>
-    <dimen name="margin_xlarge">32dp</dimen>
+    <dimen name="margin_space1">8dp</dimen>
+    <dimen name="margin_space2">12dp</dimen>
+    <dimen name="margin_space3">16dp</dimen>
+    <dimen name="margin_space4">20dp</dimen>
+    <dimen name="margin_space5">24dp</dimen>
+    <dimen name="margin_space6">32dp</dimen>
 
-    <dimen name="margin_vertical">16dp</dimen>
-    <dimen name="margin_horizontal">12dp</dimen>
+    //paddings
+    <dimen name="padding_space1">8dp</dimen>
+    <dimen name="padding_space2">12dp</dimen>
+    <dimen name="padding_space3">16dp</dimen>
+    <dimen name="padding_space4">20dp</dimen>
+    <dimen name="padding_space8">36dp</dimen>
+
+    //text size
+    <dimen name="text_small">8dp</dimen>
+    <dimen name="text_medium">14sp</dimen>
+    <dimen name="text_large">18sp</dimen>
+    <dimen name="text_xlarge">36dp</dimen>
 </resources>
