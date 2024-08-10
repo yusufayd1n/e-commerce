@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentHomeBinding
 import com.example.e_commerce.extension.Status
 import com.example.e_commerce.extension.gone
@@ -49,13 +51,15 @@ class HomeFragment : Fragment() {
     private fun setupRecyclerView() {
         productsAdapter = ProductAdapter(
             onFavoriteClick = {
-                Log.d("YUSUFAYDIN","onFavoriteClick")
+                Log.d("YUSUFAYDIN", "onFavoriteClick")
             },
-            onProductClick = {
-                Log.d("YUSUFAYDIN","onProductClick")
+            onProductClick = { product ->
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToProductDetailFragment(product)
+                findNavController().navigate(action)
             },
             onAddToCartClick = {
-                Log.d("YUSUFAYDIN","onAddToCartClick")
+                Log.d("YUSUFAYDIN", "onAddToCartClick")
             }
         )
 

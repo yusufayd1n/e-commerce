@@ -8,4 +8,5 @@
     <string name="filters">Filters:</string>
     <string name="select_filter">Select Filter</string>
     <string name="favorite">Add to favorite</string>
+    <string name="price">Price:</string>
 </resources>

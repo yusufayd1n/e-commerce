@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("kotlin-parcelize")
+    id("androidx.navigation.safeargs")
 }
 
 android {
@@ -56,6 +58,7 @@ dependencies {
     //navigation
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+
 
     //retrofit
     implementation(libs.retrofit)
