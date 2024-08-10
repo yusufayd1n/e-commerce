@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_commerce.databinding.FragmentHomeBinding
 import com.example.e_commerce.extension.Status
+import com.example.e_commerce.extension.gone
+import com.example.e_commerce.extension.visible
 import com.example.e_commerce.presentation.adapter.ProductAdapter
 import com.example.e_commerce.presentation.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -67,20 +69,20 @@ class HomeFragment : Fragment() {
         viewModel.getProducts.observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Status.SUCCESS -> {
-                    binding.progressBar.visibility = View.GONE
+                    binding.progressBar.gone()
                     resource.data?.let { products ->
                         productsAdapter.submitList(products)
                     }
                 }
 
                 Status.ERROR -> {
-                    binding.progressBar.visibility = View.GONE
-                    binding.tvError.visibility = View.VISIBLE
+                    binding.progressBar.gone()
+                    binding.tvError.visible()
                     binding.tvError.text = resource.message
                 }
 
                 Status.LOADING -> {
-                    binding.progressBar.visibility = View.VISIBLE
+                    binding.progressBar.visible()
                 }
             }
         }

@@ -11,7 +11,6 @@ object BindingAdapters {
     @BindingAdapter("imageUrl")
     fun loadImage(view: ImageView, url: String?) {
         url?.let {
-            // Glide ile resmi yükle
             Glide.with(view.context)
                 .load(it)
                 .into(view)
