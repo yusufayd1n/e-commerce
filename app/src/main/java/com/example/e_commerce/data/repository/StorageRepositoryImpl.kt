@@ -4,9 +4,8 @@ import com.example.e_commerce.data.local.database.dao.ProductDao
 import com.example.e_commerce.data.local.model.ProductDaoModel
 import com.example.e_commerce.data.local.model.ProductType
 import com.example.e_commerce.domain.repository.ProductStorageRepository
-import com.example.e_commerce.extension.Resource
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.first
 
 class StorageRepositoryImpl(
     private val productDao: ProductDao
@@ -14,22 +13,41 @@ class StorageRepositoryImpl(
 
     override suspend fun addProductToStorage(product: ProductDaoModel) {
         try {
-            productDao.insertProduct(product)
-        } catch (e: Exception) {
+            val existingProducts =
+                productDao.getProductsByType(ProductType.CART).first() // Flow'dan Listeye Dönüştür
 
+            val existingProduct = existingProducts
+                .find { it.name == product.name && it.model == product.model && it.type == product.type }
+            if (existingProduct != null) {
+                productDao.updateProductQuantity(
+                    product.name,
+                    product.model,
+                    product.type,
+                    product.quantity + 1
+                )
+            } else {
+                productDao.insertProduct(product)
+            }
+        } catch (e: Exception) {
+            // Handle exception
         }
     }
 
-
-    override fun getProductsFromStorage(type: ProductType): Flow<MutableList<ProductDaoModel>> = flow {
-        emit(productDao.getProductsByType(type))
+    override fun getProductsFromStorage(type: ProductType): Flow<MutableList<ProductDaoModel>> {
+        return productDao.getProductsByType(type)
     }
 
-    override suspend fun removeProductFromStorage(productId: String) {
-        try {
-            productDao.deleteProduct(productId)
-        } catch (e: Exception) {
 
+    override suspend fun removeProductFromStorage(product: ProductDaoModel) {
+        if (product.quantity <= 1) {
+            productDao.deleteProduct(product.id.toString())
+        } else {
+            productDao.updateProductQuantity(
+                product.name,
+                product.model,
+                product.type,
+                product.quantity - 1
+            )
         }
     }
 }

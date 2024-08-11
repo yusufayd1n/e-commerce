@@ -5,14 +5,16 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "products")
 data class ProductDaoModel(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
     val name: String,
     val image: String,
     val price: Double,
     val description: String,
     val model: String,
     val brand: String,
-    val type: ProductType
+    val type: ProductType,
+    val quantity: Int = 1
 )
 
 enum class ProductType {

@@ -1,28 +1,23 @@
 package com.example.e_commerce.presentation.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentCartBinding
-import com.example.e_commerce.databinding.FragmentHomeBinding
 import com.example.e_commerce.extension.Status
 import com.example.e_commerce.extension.gone
 import com.example.e_commerce.extension.visible
 import com.example.e_commerce.presentation.adapter.CartAdapter
 import com.example.e_commerce.presentation.viewmodel.CartViewModel
-import com.example.e_commerce.presentation.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class CartFragment : Fragment() {
@@ -65,10 +60,10 @@ class CartFragment : Fragment() {
         cartAdapter =
             CartAdapter(mutableListOf(),
                 onIncreaseClick = { product ->
-
+                    viewModel.addProduct(product)
                 },
                 onDecreaseClick = { product ->
-
+                    viewModel.removeProduct(product)
                 }
             )
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
@@ -81,8 +76,8 @@ class CartFragment : Fragment() {
                 Status.SUCCESS -> {
                     binding.progressBar.gone()
                     binding.recyclerView.visible()
-                    binding.tvPrice.text = viewModel.calculateCartAmount().toString()
                     cartAdapter.submitList(resource.data)
+                    binding.tvPrice.text = viewModel.calculateCartAmount().toString()
                 }
 
                 Status.ERROR -> {

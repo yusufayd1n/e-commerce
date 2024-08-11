@@ -5,7 +5,7 @@ import com.example.e_commerce.domain.repository.ProductStorageRepository
 import javax.inject.Inject
 
 class RemoveProductFromStorageUseCase @Inject constructor(private val productStorageRepository: ProductStorageRepository) {
-    suspend fun execute(productId: String) {
-        productStorageRepository.removeProductFromStorage(productId)
+    suspend fun execute(product: ProductDaoModel) {
+        productStorageRepository.removeProductFromStorage(product)
     }
 }
