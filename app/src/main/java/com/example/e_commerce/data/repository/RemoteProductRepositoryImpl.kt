@@ -12,10 +12,14 @@ class RemoteProductRepositoryImpl(
     private val productApiService: ProductApiService
 ) : ProductRepository {
 
-    override suspend fun getProducts(): Flow<Resource<MutableList<Product>>> = flow {
+    override suspend fun getProducts(
+        pageSize: Int,
+        page: Int
+    ): Flow<Resource<MutableList<Product>>> = flow {
         emit(Resource.loading(null))
 
-        val productResponse: MutableList<ProductResponse> = productApiService.getProducts()
+        val productResponse: MutableList<ProductResponse> =
+            productApiService.getProducts(pageSize, page)
 
         try {
             val products = productResponse.map { response ->
@@ -29,6 +33,7 @@ class RemoteProductRepositoryImpl(
                     brand = response.brand
                 )
             }.toMutableList()
+
             emit(Resource.success(products))
         } catch (e: Exception) {
             emit(Resource.error(e.message ?: "Unknown error", null)) // Hata durumu

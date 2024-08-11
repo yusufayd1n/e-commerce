@@ -1,5 +1,6 @@
 package com.example.e_commerce.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,13 +25,16 @@ class HomeViewModel @Inject constructor(
     val getProducts: LiveData<Resource<MutableList<Product>>>
         get() = _getProducts
 
-    fun getProducts() {
+    private var page = 1
+    private var pageSize = 4
+    private fun getProducts() {
         viewModelScope.launch(Dispatchers.IO) {
             _getProducts.postValue(Resource.loading(null))
             try {
-                productsUseCase.invoke().collect {
-                    _getProducts.postValue(it)
+                productsUseCase.invoke(pageSize, page).collect { productList ->
+                    _getProducts.postValue(productList)
                 }
+
             } catch (e: Exception) {
                 _getProducts.postValue(Resource.error(e.message ?: "Unknown error", null))
             }
@@ -41,6 +45,11 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             addProductUseCase.execute(product.toDaoModel(type))
         }
+    }
+
+    fun loadNextPage() {
+        page += 1
+        getProducts()
     }
 
     init {
