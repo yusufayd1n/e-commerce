@@ -22,7 +22,6 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val productsUseCase: GetProductsUseCase,
     private val addProductUseCase: AddProductToStorageUseCase,
-    //private val removeProductUseCase: RemoveProductFromStorageUseCase
 ) : ViewModel() {
     private var _getProducts = MutableLiveData<Resource<MutableList<Product>>>()
     val getProducts: LiveData<Resource<MutableList<Product>>>
@@ -47,17 +46,8 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    /*fun removeProduct(id: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            removeProductUseCase.execute(id)
-        }
-    }*/
-
     init {
         getProducts()
-        viewModelScope.launch {
-            delay(5000)
-            Log.d("YUSUFAYDIN", getProducts.value.toString())
-        }
     }
+
 }

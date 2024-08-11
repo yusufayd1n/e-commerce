@@ -3,25 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/navigation_home">
 
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@+id/navigation_home"
         android:name="com.example.e_commerce.presentation.view.HomeFragment"
-        android:label="fragment_home"
+        android:label="Home"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_productDetailFragment"
             app:destination="@id/productDetailFragment" />
         <action
             android:id="@+id/action_homeFragment_to_basketFragment"
-            app:destination="@id/basketFragment" />
+            app:destination="@id/navigation_cart" />
     </fragment>
     <fragment
-        android:id="@+id/basketFragment"
-        android:name="com.example.e_commerce.presentation.view.BasketFragment"
+        android:id="@+id/navigation_cart"
+        android:name="com.example.e_commerce.presentation.view.CartFragment"
         android:label="Cart"
-        tools:layout="@layout/fragment_basket" />
+        tools:layout="@layout/fragment_cart" />
     <fragment
         android:id="@+id/productDetailFragment"
         android:name="com.example.e_commerce.presentation.view.ProductDetailFragment"
@@ -29,7 +29,7 @@
         tools:layout="@layout/fragment_product_detail" >
         <action
             android:id="@+id/action_productDetailFragment_to_basketFragment"
-            app:destination="@id/basketFragment" />
+            app:destination="@id/navigation_cart" />
         <argument
             android:name="product"
             app:argType="com.example.e_commerce.domain.model.Product" />

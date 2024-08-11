@@ -6,6 +6,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.example.e_commerce.data.local.model.ProductDaoModel
 import com.example.e_commerce.data.local.model.ProductType
+import com.example.e_commerce.extension.Resource
 
 @Dao
 interface ProductDao {

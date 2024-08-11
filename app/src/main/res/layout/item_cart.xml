@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="product"
+            type="com.example.e_commerce.data.local.model.ProductDaoModel" />
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tv_product_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="Product Name"
+        android:textSize="@dimen/text_large"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="@{product.name}"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/quantityContainer" />
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="18.000₺"
+        android:textColor="@color/blue"
+        android:text="@{String.valueOf(product.price) + '₺'}"
+        android:textSize="@dimen/text_medium"
+        android:fontFamily="@font/montserrat"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_product_name"
+        app:layout_constraintEnd_toStartOf="@+id/quantityContainer" />
+
+    <LinearLayout
+        android:id="@+id/quantityContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="@dimen/margin_space5">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_decrease"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="@string/minus"
+            android:background="@color/gray3" />
+
+        <TextView
+            android:id="@+id/tv_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="1"
+            android:paddingHorizontal="@dimen/padding_space4"
+            android:paddingVertical="@dimen/padding_space3"
+            android:textColor="@android:color/white"
+            android:background="@color/blue"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_increase"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="@string/plus"
+            android:background="@color/gray3" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
