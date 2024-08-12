@@ -10,6 +10,7 @@ import com.example.e_commerce.domain.usecase.AddProductToStorageUseCase
 import com.example.e_commerce.domain.usecase.GetProductsFromStorageUseCase
 import com.example.e_commerce.domain.usecase.RemoveProductFromStorageUseCase
 import com.example.e_commerce.extension.Resource
+import com.example.e_commerce.extension.toDaoModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,15 +27,34 @@ class CartViewModel @Inject constructor(
     val getProductsFromLocalDatabase: LiveData<Resource<MutableList<ProductDaoModel>>>
         get() = _getProductsFromLocalDatabase
 
+    private val _addProductStatus = MutableLiveData<Resource<Unit>>()
+    val addProductStatus: LiveData<Resource<Unit>> get() = _addProductStatus
+
+    private val _removeProductStatus = MutableLiveData<Resource<Unit>>()
+    val removeProductStatus: LiveData<Resource<Unit>> get() = _removeProductStatus
+
     fun addProduct(product: ProductDaoModel) {
         viewModelScope.launch(Dispatchers.IO) {
-            addProductUseCase.execute(product)
+            _addProductStatus.postValue(Resource.loading(null))
+            try {
+                addProductUseCase.execute(product)
+                _addProductStatus.postValue(Resource.success(null))
+            } catch (e: Exception) {
+                _addProductStatus.postValue(Resource.error("Error during add", null))
+            }
         }
+
     }
 
     fun removeProduct(product: ProductDaoModel) {
         viewModelScope.launch(Dispatchers.IO) {
-            removeProductUseCase.execute(product)
+            _removeProductStatus.postValue(Resource.loading(null))
+            try {
+                removeProductUseCase.execute(product)
+                _removeProductStatus.postValue(Resource.success(null))
+            } catch (e: Exception) {
+                _removeProductStatus.postValue(Resource.error("Error during add", null))
+            }
         }
     }
 

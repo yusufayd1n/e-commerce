@@ -92,6 +92,38 @@ class CartFragment : Fragment() {
                 }
             }
         }
+
+        viewModel.addProductStatus.observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    binding.progressBar.gone()
+                    Toast.makeText(context, "Product Added To Cart!", Toast.LENGTH_SHORT).show()
+                }
+                Status.ERROR -> {
+                    binding.progressBar.gone()
+                    Toast.makeText(context, resource.message ?: "Some Error", Toast.LENGTH_SHORT).show()
+                }
+                Status.LOADING -> {
+                    binding.progressBar.visible()
+                }
+            }
+        }
+
+        viewModel.removeProductStatus.observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    binding.progressBar.gone()
+                    Toast.makeText(context, "Product Delete Success", Toast.LENGTH_SHORT).show()
+                }
+                Status.ERROR -> {
+                    binding.progressBar.gone()
+                    Toast.makeText(context, resource.message ?: "Some Error", Toast.LENGTH_SHORT).show()
+                }
+                Status.LOADING -> {
+                    binding.progressBar.visible()
+                }
+            }
+        }
     }
 
     override fun onResume() {

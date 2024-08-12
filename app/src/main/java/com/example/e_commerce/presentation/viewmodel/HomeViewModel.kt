@@ -31,6 +31,9 @@ class HomeViewModel @Inject constructor(
     val searchResults: LiveData<Resource<MutableList<Product>>>
         get() = _searchResults
 
+    private val _addProductStatus = MutableLiveData<Resource<Unit>>()
+    val addProductStatus: LiveData<Resource<Unit>> get() = _addProductStatus
+
     var page = 1
     private var pageSize = 8
 
@@ -62,7 +65,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun searchProducts(name: String) {
+    private fun searchProducts(name: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _searchResults.postValue(Resource.loading(null))
             try {
@@ -77,7 +80,13 @@ class HomeViewModel @Inject constructor(
 
     fun addProduct(product: Product, type: ProductType) {
         viewModelScope.launch(Dispatchers.IO) {
-            addProductUseCase.execute(product.toDaoModel(type))
+            _addProductStatus.postValue(Resource.loading(null))
+            try {
+                addProductUseCase.execute(product.toDaoModel(type))
+                _addProductStatus.postValue(Resource.success(null))
+            } catch (e: Exception) {
+                _addProductStatus.postValue(Resource.error("Error during add", null))
+            }
         }
     }
 

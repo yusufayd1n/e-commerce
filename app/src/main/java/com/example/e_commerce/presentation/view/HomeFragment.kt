@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -151,15 +152,24 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+
+        viewModel.addProductStatus.observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    binding.progressBar.gone()
+                    Toast.makeText(context, "Product Added To Success", Toast.LENGTH_SHORT).show()
+                }
+                Status.ERROR -> {
+                    binding.progressBar.gone()
+                    Toast.makeText(context, resource.message ?: "Some Error", Toast.LENGTH_SHORT).show()
+                }
+                Status.LOADING -> {
+                    binding.progressBar.visible()
+                }
+            }
+        }
     }
 
-   /* override fun onResume() {
-        super.onResume()
-        // Sayfa numarasını sadece gerekli olduğunda artırın
-        if (viewModel.page == 1) {
-            viewModel.getProducts()
-        }
-    }*/
 
     override fun onDestroyView() {
         super.onDestroyView()

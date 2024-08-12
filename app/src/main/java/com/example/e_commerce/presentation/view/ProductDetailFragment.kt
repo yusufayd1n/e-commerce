@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.e_commerce.data.local.model.ProductType
 import com.example.e_commerce.databinding.FragmentProductDetailBinding
 import com.example.e_commerce.domain.model.Product
+import com.example.e_commerce.extension.Status
+import com.example.e_commerce.extension.gone
 import com.example.e_commerce.extension.toDaoModel
 import com.example.e_commerce.extension.visible
 import com.example.e_commerce.presentation.viewmodel.HomeViewModel
@@ -40,6 +43,7 @@ class ProductDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        observeViewModel()
     }
 
     private fun initView() {
@@ -58,9 +62,25 @@ class ProductDetailFragment : Fragment() {
                     viewModel.addProduct(argsProduct.toDaoModel(ProductType.CART))
                 }
             }
-
         }
+    }
 
+    private fun observeViewModel() {
+        viewModel.addProductStatus.observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    binding.progressBar.gone()
+                    Toast.makeText(context, "Product Added To Cart!", Toast.LENGTH_SHORT).show()
+                }
+                Status.ERROR -> {
+                    binding.progressBar.gone()
+                    Toast.makeText(context, resource.message ?: "Some Error", Toast.LENGTH_SHORT).show()
+                }
+                Status.LOADING -> {
+                    binding.progressBar.visible()
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
