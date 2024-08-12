@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="product"
+            type="com.example.e_commerce.data.local.model.ProductDaoModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_space2"
+        android:layout_marginTop="@dimen/margin_space2"
+        android:layout_marginEnd="@dimen/margin_space4">
+
+        <ImageView
+            android:id="@+id/iv_product"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/test"
+            android:contentDescription="@string/product"
+            app:imageUrl="@{product.image}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintDimensionRatio="H,2:1" />
+
+        <TextView
+            android:id="@+id/tv_product_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_space2"
+            android:layout_marginTop="@dimen/margin_space3"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="@{String.valueOf(product.price) + '₺'}"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_medium"
+            app:layout_constraintTop_toBottomOf="@id/iv_product"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="15.000 ₺" />
+
+        <TextView
+            android:id="@+id/tv_product_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_space2"
+            android:layout_marginTop="@dimen/margin_space3"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="@{product.name}"
+            android:textSize="@dimen/text_medium"
+            app:layout_constraintTop_toBottomOf="@id/tv_product_price"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="iPhone 13 Pro Max 256Gb" />
+
+        <ImageView
+            android:id="@+id/iv_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/favorite"
+            android:src="@drawable/ic_star"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="@dimen/margin_space1"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

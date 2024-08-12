@@ -7,27 +7,27 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_commerce.data.local.model.ProductDaoModel
 import com.example.e_commerce.databinding.ItemCartBinding
+import com.example.e_commerce.databinding.ItemFavoriteBinding
+import com.example.e_commerce.databinding.ItemProductBinding
 
-class CartAdapter(
-    private val onIncreaseClick: (ProductDaoModel) -> Unit,
-    private val onDecreaseClick: (ProductDaoModel) -> Unit
-) : ListAdapter<ProductDaoModel, CartAdapter.CartViewHolder>(CartDiffCallback()) {
+class FavoritesAdapter(
+    private val onFavoriteEvent: (ProductDaoModel) -> Unit
+) : ListAdapter<ProductDaoModel, FavoritesAdapter.CartViewHolder>(CartDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
-        val binding = ItemCartBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemFavoriteBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CartViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
         val product = getItem(position)
-        holder.bind(product, onIncreaseClick, onDecreaseClick)
+        holder.bind(product, onFavoriteEvent)
     }
 
-    class CartViewHolder(private val binding: ItemCartBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(product: ProductDaoModel, onIncreaseClick: (ProductDaoModel) -> Unit, onDecreaseClick: (ProductDaoModel) -> Unit) {
+    class CartViewHolder(private val binding: ItemFavoriteBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(product: ProductDaoModel, onFavoriteEvent: (ProductDaoModel) -> Unit) {
             binding.product = product
-            binding.btnIncrease.setOnClickListener { onIncreaseClick(product) }
-            binding.btnDecrease.setOnClickListener { onDecreaseClick(product) }
+            binding.ivFavorite.setOnClickListener { onFavoriteEvent(product) }
             binding.executePendingBindings()
         }
     }

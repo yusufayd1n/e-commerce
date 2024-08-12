@@ -58,7 +58,7 @@ class CartFragment : Fragment() {
 
     private fun setAdapter() {
         cartAdapter =
-            CartAdapter(mutableListOf(),
+            CartAdapter(
                 onIncreaseClick = { product ->
                     viewModel.addProduct(product)
                 },

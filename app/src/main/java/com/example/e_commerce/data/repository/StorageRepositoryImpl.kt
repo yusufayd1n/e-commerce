@@ -14,7 +14,7 @@ class StorageRepositoryImpl(
     override suspend fun addProductToStorage(product: ProductDaoModel) {
         try {
             val existingProducts =
-                productDao.getProductsByType(ProductType.CART).first() // Flow'dan Listeye Dönüştür
+                productDao.getProductsByType(ProductType.CART).first()
 
             val existingProduct = existingProducts
                 .find { it.name == product.name && it.model == product.model && it.type == product.type }

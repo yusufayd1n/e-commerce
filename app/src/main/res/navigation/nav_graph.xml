@@ -34,4 +34,9 @@
             android:name="product"
             app:argType="com.example.e_commerce.domain.model.Product" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_favorites"
+        android:name="com.example.e_commerce.presentation.view.FavoritesFragment"
+        android:label="Favorites"
+        tools:layout="@layout/fragment_favorites" />
 </navigation>
