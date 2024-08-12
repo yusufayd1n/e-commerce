@@ -1,5 +1,6 @@
 package com.example.e_commerce.data.repository
 
+import android.util.Log
 import com.example.e_commerce.data.local.database.dao.ProductDao
 import com.example.e_commerce.data.local.model.ProductDaoModel
 import com.example.e_commerce.data.local.model.ProductType
@@ -29,7 +30,7 @@ class StorageRepositoryImpl(
                 productDao.insertProduct(product)
             }
         } catch (e: Exception) {
-
+            Log.d("StorageRepositoryImpl", e.message.toString())
         }
     }
 

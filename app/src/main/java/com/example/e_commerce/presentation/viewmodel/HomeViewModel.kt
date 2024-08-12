@@ -1,6 +1,5 @@
 package com.example.e_commerce.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,7 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.e_commerce.data.local.model.ProductType
 import com.example.e_commerce.domain.model.Product
 import com.example.e_commerce.domain.usecase.AddProductToStorageUseCase
+import com.example.e_commerce.domain.usecase.GetProductsFromStorageUseCase
 import com.example.e_commerce.domain.usecase.GetProductsUseCase
+import com.example.e_commerce.domain.usecase.RemoveProductFromStorageUseCase
 import com.example.e_commerce.domain.usecase.SearchProductsUseCase
 import com.example.e_commerce.extension.Resource
 import com.example.e_commerce.extension.toDaoModel
@@ -22,6 +23,8 @@ class HomeViewModel @Inject constructor(
     private val productsUseCase: GetProductsUseCase,
     private val addProductUseCase: AddProductToStorageUseCase,
     private val searchProductUseCase: SearchProductsUseCase,
+    private val getProductFromStorageUseCase: GetProductsFromStorageUseCase,
+    private val removeProductFromStorageUseCase: RemoveProductFromStorageUseCase,
 ) : ViewModel() {
     private var _getProducts = MutableLiveData<Resource<MutableList<Product>>>()
     val getProducts: LiveData<Resource<MutableList<Product>>>
@@ -33,6 +36,9 @@ class HomeViewModel @Inject constructor(
 
     private val _addProductStatus = MutableLiveData<Resource<Unit>>()
     val addProductStatus: LiveData<Resource<Unit>> get() = _addProductStatus
+
+    private val _favoriteProductNames = MutableLiveData<List<String>>(emptyList())
+    val favoriteProductNames: LiveData<List<String>> get() = _favoriteProductNames
 
     var page = 1
     private var pageSize = 8
@@ -90,6 +96,18 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    private fun getFavoriteProductsNames() {
+        viewModelScope.launch {
+            getProductFromStorageUseCase.execute(ProductType.FAVORITE).collect { favoriteProducts ->
+                val myFavoritesList : ArrayList<String> = arrayListOf()
+                favoriteProducts.forEach {
+                    myFavoritesList.add(it.name)
+                }
+                _favoriteProductNames.value = myFavoritesList
+            }
+        }
+    }
+
 
     fun loadNextPage() {
         page += 1
@@ -98,6 +116,7 @@ class HomeViewModel @Inject constructor(
 
     init {
         getProducts()
+        getFavoriteProductsNames()
     }
 
 }

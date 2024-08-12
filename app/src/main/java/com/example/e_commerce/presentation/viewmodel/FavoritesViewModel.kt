@@ -17,7 +17,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(
-    private val addProductUseCase: AddProductToStorageUseCase,
     private val removeProductUseCase: RemoveProductFromStorageUseCase,
     private val getProductsProductUseCase: GetProductsFromStorageUseCase,
 ) : ViewModel() {
@@ -26,19 +25,13 @@ class FavoritesViewModel @Inject constructor(
     val getProductsFromLocalDatabase: LiveData<Resource<MutableList<ProductDaoModel>>>
         get() = _getProductsFromLocalDatabase
 
-    fun addProduct(product: ProductDaoModel) {
-        viewModelScope.launch(Dispatchers.IO) {
-            addProductUseCase.execute(product)
-        }
-    }
-
     fun removeProduct(product: ProductDaoModel) {
         viewModelScope.launch(Dispatchers.IO) {
             removeProductUseCase.execute(product)
         }
     }
 
-    fun getProductsByType() {
+    private fun getProductsByType() {
         viewModelScope.launch(Dispatchers.IO) {
             _getProductsFromLocalDatabase.postValue(Resource.loading(null))
             try {
