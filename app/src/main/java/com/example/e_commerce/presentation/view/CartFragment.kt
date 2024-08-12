@@ -23,7 +23,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class CartFragment : Fragment() {
     private val viewModel: CartViewModel by viewModels()
     private var _binding: FragmentCartBinding? = null
-    private val binding get() = _binding!!
+    private val binding: FragmentCartBinding
+        get() = _binding ?: throw IllegalStateException("Binding is not initialized")
     private lateinit var cartAdapter: CartAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +33,7 @@ class CartFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
         _binding = FragmentCartBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -99,10 +99,13 @@ class CartFragment : Fragment() {
                     binding.progressBar.gone()
                     Toast.makeText(context, "Product Added To Cart!", Toast.LENGTH_SHORT).show()
                 }
+
                 Status.ERROR -> {
                     binding.progressBar.gone()
-                    Toast.makeText(context, resource.message ?: "Some Error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, resource.message ?: "Some Error", Toast.LENGTH_SHORT)
+                        .show()
                 }
+
                 Status.LOADING -> {
                     binding.progressBar.visible()
                 }
@@ -115,10 +118,13 @@ class CartFragment : Fragment() {
                     binding.progressBar.gone()
                     Toast.makeText(context, "Product Delete Success", Toast.LENGTH_SHORT).show()
                 }
+
                 Status.ERROR -> {
                     binding.progressBar.gone()
-                    Toast.makeText(context, resource.message ?: "Some Error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, resource.message ?: "Some Error", Toast.LENGTH_SHORT)
+                        .show()
                 }
+
                 Status.LOADING -> {
                     binding.progressBar.visible()
                 }
@@ -129,5 +135,10 @@ class CartFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         viewModel.getProductsByType()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

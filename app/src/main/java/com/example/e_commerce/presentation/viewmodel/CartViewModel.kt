@@ -10,7 +10,6 @@ import com.example.e_commerce.domain.usecase.AddProductToStorageUseCase
 import com.example.e_commerce.domain.usecase.GetProductsFromStorageUseCase
 import com.example.e_commerce.domain.usecase.RemoveProductFromStorageUseCase
 import com.example.e_commerce.extension.Resource
-import com.example.e_commerce.extension.toDaoModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

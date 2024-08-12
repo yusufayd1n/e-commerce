@@ -9,7 +9,6 @@ import com.example.e_commerce.domain.model.Product
 import com.example.e_commerce.domain.usecase.AddProductToStorageUseCase
 import com.example.e_commerce.domain.usecase.GetProductsFromStorageUseCase
 import com.example.e_commerce.domain.usecase.GetProductsUseCase
-import com.example.e_commerce.domain.usecase.RemoveProductFromStorageUseCase
 import com.example.e_commerce.domain.usecase.SearchProductsUseCase
 import com.example.e_commerce.extension.Resource
 import com.example.e_commerce.extension.toDaoModel
@@ -23,8 +22,7 @@ class HomeViewModel @Inject constructor(
     private val productsUseCase: GetProductsUseCase,
     private val addProductUseCase: AddProductToStorageUseCase,
     private val searchProductUseCase: SearchProductsUseCase,
-    private val getProductFromStorageUseCase: GetProductsFromStorageUseCase,
-    private val removeProductFromStorageUseCase: RemoveProductFromStorageUseCase,
+    private val getProductFromStorageUseCase: GetProductsFromStorageUseCase
 ) : ViewModel() {
     private var _getProducts = MutableLiveData<Resource<MutableList<Product>>>()
     val getProducts: LiveData<Resource<MutableList<Product>>>

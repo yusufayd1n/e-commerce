@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.e_commerce.data.local.model.ProductDaoModel
 import com.example.e_commerce.data.local.model.ProductType
-import com.example.e_commerce.domain.usecase.AddProductToStorageUseCase
 import com.example.e_commerce.domain.usecase.GetProductsFromStorageUseCase
 import com.example.e_commerce.domain.usecase.RemoveProductFromStorageUseCase
 import com.example.e_commerce.extension.Resource

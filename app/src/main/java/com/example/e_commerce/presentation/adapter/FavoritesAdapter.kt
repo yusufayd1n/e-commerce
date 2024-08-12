@@ -6,9 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_commerce.data.local.model.ProductDaoModel
-import com.example.e_commerce.databinding.ItemCartBinding
 import com.example.e_commerce.databinding.ItemFavoriteBinding
-import com.example.e_commerce.databinding.ItemProductBinding
 
 class FavoritesAdapter(
     private val onFavoriteEvent: (ProductDaoModel) -> Unit

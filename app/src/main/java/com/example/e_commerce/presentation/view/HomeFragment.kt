@@ -27,7 +27,9 @@ class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels()
     private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
+    private val binding: FragmentHomeBinding
+        get() = _binding ?: throw IllegalStateException("Binding is not initialized")
+
     private lateinit var productsAdapter: ProductAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,7 +76,6 @@ class HomeFragment : Fragment() {
             },
             favoriteProducts = viewModel.favoriteProductNames.value.orEmpty()
         )
-
     }
 
     private fun setupRecyclerView() {
@@ -140,6 +141,8 @@ class HomeFragment : Fragment() {
             when (resource.status) {
                 Status.SUCCESS -> {
                     binding.progressBar.gone()
+                    binding.tvError.gone()
+                    binding.rvProducts.visible()
                     resource.data?.let { products ->
                         productsAdapter.submitList(products)
                     }
@@ -147,6 +150,7 @@ class HomeFragment : Fragment() {
 
                 Status.ERROR -> {
                     binding.progressBar.gone()
+                    binding.rvProducts.gone()
                     binding.tvError.visible()
                     binding.tvError.text = resource.message
                 }
