@@ -13,8 +13,8 @@ interface ProductDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertProduct(product: ProductDaoModel)
 
-    @Query("UPDATE products SET quantity = :quantity WHERE name = :name AND model = :model AND type = :type")
-    suspend fun updateProductQuantity(name: String, model: String, type: ProductType, quantity: Int)
+    @Query("UPDATE products SET quantity = quantity + :increment WHERE name = :name AND model = :model AND type = :type")
+    suspend fun updateProductQuantity(name: String, model: String, type: ProductType, increment: Int)
 
     @Query("DELETE FROM products WHERE id = :id")
     suspend fun deleteProduct(id: String)

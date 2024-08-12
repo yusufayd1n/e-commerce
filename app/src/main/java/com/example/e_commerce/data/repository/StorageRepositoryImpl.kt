@@ -24,7 +24,7 @@ class StorageRepositoryImpl(
                     product.name,
                     product.model,
                     product.type,
-                    product.quantity + 1
+                    1
                 )
             } else {
                 productDao.insertProduct(product)
@@ -47,7 +47,7 @@ class StorageRepositoryImpl(
                 product.name,
                 product.model,
                 product.type,
-                product.quantity - 1
+                -1
             )
         }
     }
