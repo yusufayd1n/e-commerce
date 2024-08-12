@@ -29,7 +29,7 @@ class StorageRepositoryImpl(
                 productDao.insertProduct(product)
             }
         } catch (e: Exception) {
-            // Handle exception
+
         }
     }
 

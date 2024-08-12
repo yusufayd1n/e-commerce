@@ -2,10 +2,13 @@ package com.example.e_commerce.presentation.view
 
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,6 +22,7 @@ import com.example.e_commerce.extension.isLoading
 import com.example.e_commerce.extension.visible
 import com.example.e_commerce.presentation.adapter.ProductAdapter
 import com.example.e_commerce.presentation.viewmodel.HomeViewModel
+import com.google.android.material.internal.ViewUtils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,6 +51,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setAdapter()
         setupRecyclerView()
+        setupSearchView()
         observeViewModel()
     }
 
@@ -56,7 +61,8 @@ class HomeFragment : Fragment() {
                 viewModel.addProduct(it, ProductType.FAVORITE)
             },
             onProductClick = { product ->
-                val action = HomeFragmentDirections.actionHomeFragmentToProductDetailFragment(product)
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToProductDetailFragment(product)
                 findNavController().navigate(action)
             },
             onAddToCartClick = {
@@ -76,13 +82,27 @@ class HomeFragment : Fragment() {
                     super.onScrolled(recyclerView, dx, dy)
                     val layoutManager = recyclerView.layoutManager as GridLayoutManager
                     val totalItemCount = layoutManager.itemCount
+
                     val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
-                    if (!binding.rvProducts.isLoading && lastVisibleItem >= totalItemCount - 1) {
+                    if (!binding.rvProducts.isLoading && lastVisibleItem >= totalItemCount - 1 && binding.etSearch.text.isNullOrEmpty()) {
                         binding.rvProducts.isLoading = true
                         viewModel.loadNextPage()
                     }
                 }
             })
+        }
+    }
+
+    private fun setupSearchView() {
+        binding.etSearch.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
+                val query = binding.etSearch.text.toString()
+                viewModel.searchOrLoadProducts(query)
+                //hideKeyboard(binding,true)  // Klavyeyi kapat
+                true
+            } else {
+                false
+            }
         }
     }
 
@@ -93,9 +113,7 @@ class HomeFragment : Fragment() {
                     binding.progressBar.gone()
                     binding.rvProducts.isLoading = false
                     resource.data?.let { products ->
-                        val currentList = productsAdapter.currentList.toMutableList()
-                        currentList.addAll(products)
-                        productsAdapter.submitList(currentList)
+                        productsAdapter.submitList(products)
                     }
                 }
 
@@ -112,7 +130,36 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+
+        viewModel.searchResults.observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    binding.progressBar.gone()
+                    resource.data?.let { products ->
+                        productsAdapter.submitList(products)
+                    }
+                }
+
+                Status.ERROR -> {
+                    binding.progressBar.gone()
+                    binding.tvError.visible()
+                    binding.tvError.text = resource.message
+                }
+
+                Status.LOADING -> {
+                    binding.progressBar.visible()
+                }
+            }
+        }
     }
+
+   /* override fun onResume() {
+        super.onResume()
+        // Sayfa numarasını sadece gerekli olduğunda artırın
+        if (viewModel.page == 1) {
+            viewModel.getProducts()
+        }
+    }*/
 
     override fun onDestroyView() {
         super.onDestroyView()

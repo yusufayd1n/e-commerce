@@ -36,7 +36,28 @@ class RemoteProductRepositoryImpl(
 
             emit(Resource.success(products))
         } catch (e: Exception) {
-            emit(Resource.error(e.message ?: "Unknown error", null)) // Hata durumu
+            emit(Resource.error(e.message ?: "Unknown error", null))
+        }
+    }
+
+    override suspend fun searchProducts(name: String): Flow<Resource<MutableList<Product>>> = flow {
+        emit(Resource.loading(null))
+        try {
+            val productResponse = productApiService.searchProducts(name)
+            val products = productResponse.map { response ->
+                Product(
+                    id = response.id,
+                    name = response.name,
+                    image = response.image,
+                    price = response.price.toDouble(),
+                    description = response.description,
+                    model = response.model,
+                    brand = response.brand
+                )
+            }.toMutableList()
+            emit(Resource.success(products))
+        } catch (e: Exception) {
+            emit(Resource.error(e.message ?: "Unknown error", null))
         }
     }
 }

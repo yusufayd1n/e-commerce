@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface ProductRepository {
     suspend fun getProducts(pageSize: Int, page: Int): Flow<Resource<MutableList<Product>>>
+    suspend fun searchProducts(name: String): Flow<Resource<MutableList<Product>>>
 }
